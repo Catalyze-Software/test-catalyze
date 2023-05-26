@@ -24,6 +24,15 @@ dfx stop
 # start the replica
 dfx start --clean --background 
 
+#install candid ui
+(
+    cd didjs; 
+    dfx canister create didjs --no-wallet; 
+    echo "export const candid_ui = 'http://localhost:8080/?canisterId=$(dfx canister id didjs)';" >> ../_test_environment/testCanisterIds.ts;
+    echo "export const candid_ui_canister_id = '$(dfx canister id didjs)';" >> ../_test_environment/testCanisterIds.ts;
+    dfx canister install --wasm didjs.wasm didjs;
+)
+
 #iterate over the repositories
 for repo in "${repos[@]}"; do
     # clone the repo

@@ -19,11 +19,16 @@ import {
   sns_reports_canister_id,
 } from "../../_test_environment/testCanisterIds";
 
-const host = "http://localhost:8080";
+const host = "http://127.0.0.1:8080";
+// const host = "https://icp0.io";
+
+const agent = (identity: Ed25519KeyIdentity) => {
+  const agent = new HttpAgent({ host, identity });
+  return agent;
+};
 
 export const parentActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
-  return Actor.createActor(parentIdlFactory, { agent, canisterId }) as _PARENT_SERVICE;
+  return Actor.createActor(parentIdlFactory, { agent: agent(identity), canisterId }) as _PARENT_SERVICE;
 };
 
 export const groupParentActor = (identity: Ed25519KeyIdentity) => {
@@ -51,36 +56,30 @@ export const reportsParentActor = (identity: Ed25519KeyIdentity) => {
 };
 
 export const childGroupActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
-  return Actor.createActor(groupIdlFactory, { agent, canisterId }) as _GROUP_SERVICE;
+  return Actor.createActor(groupIdlFactory, { agent: agent(identity), canisterId }) as _GROUP_SERVICE;
 };
 
 export const childEventActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
-  return Actor.createActor(eventIdlFactory, { agent, canisterId }) as _EVENT_SERVICE;
+  return Actor.createActor(eventIdlFactory, { agent: agent(identity), canisterId }) as _EVENT_SERVICE;
 };
 
 export const childEventAttendeesActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
   return Actor.createActor(eventAttendeeIdlFactory, {
-    agent,
+    agent: agent(identity),
     canisterId,
   }) as _EVENT_ATTENDEES_SERVICE;
 };
 
 export const childMemberActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
-  return Actor.createActor(memberIdlFactory, { agent, canisterId }) as _MEMBER_SERVICE;
+  return Actor.createActor(memberIdlFactory, { agent: agent(identity), canisterId }) as _MEMBER_SERVICE;
 };
 
 export const childProfileActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
-  return Actor.createActor(profileIdlFactory, { agent, canisterId }) as _PROFILE_SERVICE;
+  return Actor.createActor(profileIdlFactory, { agent: agent(identity), canisterId }) as _PROFILE_SERVICE;
 };
 
 export const childReportActor = (identity: Ed25519KeyIdentity, canisterId: string) => {
-  const agent = new HttpAgent({ host, identity });
-  return Actor.createActor(reportIdlFactory, { agent, canisterId }) as _REPORT_SERVICE;
+  return Actor.createActor(reportIdlFactory, { agent: agent(identity), canisterId }) as _REPORT_SERVICE;
 };
 
 export default {
