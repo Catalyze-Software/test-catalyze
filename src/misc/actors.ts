@@ -24,6 +24,7 @@ const host = "http://127.0.0.1:8080";
 
 const agent = (identity: Ed25519KeyIdentity) => {
   const agent = new HttpAgent({ host, identity });
+  agent.fetchRootKey();
   return agent;
 };
 
@@ -86,7 +87,7 @@ export default {
   parent: {
     group: groupParentActor,
     event: eventParentActor,
-    eventAttendees: eventAttendeesParentActor,
+    eventAttendee: eventAttendeesParentActor,
     member: memberParentActor,
     profile: profilesParentActor,
     report: reportsParentActor,
@@ -94,7 +95,7 @@ export default {
   child: {
     group: childGroupActor,
     event: childEventActor,
-    eventAttendees: childEventAttendeesActor,
+    eventAttendee: childEventAttendeesActor,
     member: childMemberActor,
     profile: childProfileActor,
     report: childReportActor,
