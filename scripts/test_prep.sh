@@ -43,7 +43,7 @@ for repo in "${repos[@]}"; do
         # navigate to the folder
         cd _test_environment/$repo; 
         # create the parent folder (child gets automatically created)
-        dfx canister create parent --no-wallet; 
+        dfx canister create parent --no-wallet --with-cycles 100000000000000000; 
 
         # store the canister id in a .ts file
         echo "export const $(echo "$repo")_canister_id = '$(dfx canister id parent)';" >> ../../_test_environment/testCanisterIds.ts;

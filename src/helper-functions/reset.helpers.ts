@@ -11,11 +11,17 @@ export type CanisterName =
 export async function reset(canister: CanisterName) {
   const result = await new Promise((resolve, reject) => {
     exec(`bash scripts/reset_canister.sh ${canister}`, (error, stdout, stderr) => {
-      if (error) {
-        return reject(error);
+      if (stderr) {
+        return resolve(`${canister}: ${stderr}`);
       }
-      return resolve(stdout);
+      return reject(`${canister}: ${error} ${stdout}`);
     });
   });
   console.log(result);
 }
+
+// export async function cleanup(canisters: CanisterName[]) {
+//   for (const canister of canisters) {
+//     await reset(canister);
+//   }
+// }
