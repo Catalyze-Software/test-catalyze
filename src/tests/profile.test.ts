@@ -3,7 +3,7 @@ import { _SERVICE as _PARENT_SERVICE } from "../declarations/parent.declarations
 import { _SERVICE as _PROFILE_SERVICE } from "../declarations/profiles.declarations";
 import { Member, _SERVICE as _MEMBER_SERVICE } from "../declarations/members.declarations";
 import identities from "../misc/identities";
-import { postProfileMock } from "../mock-data/profile.mock";
+import { postProfile_identity_one_public } from "../mock-data/profile.mock";
 import { CanisterRelation, getParentAndChildCanister } from "../helper-functions/actor.helpers";
 import { reset } from "../helper-functions/reset.helpers";
 
@@ -34,7 +34,7 @@ describe("Create profile test", () => {
 
   it("Member canisters should be defined", async () => {
     memberCanisters = await getParentAndChildCanister<_MEMBER_SERVICE>(identities.one(), "member");
-    expect(memberCanisters).toBeDefined();
+    await expect(memberCanisters).toBeDefined();
   });
 
   it("Identity one profile should be created", async () => {
@@ -44,17 +44,17 @@ describe("Create profile test", () => {
     }
 
     const result = await identityOneProfileCanisters?.child.add_profile(
-      postProfileMock,
+      postProfile_identity_one_public,
       Principal.fromText(memberCanisters.childCanisterId)
     );
-    expect(result).toEqual({ Ok: expect.objectContaining({ username: postProfileMock.username }) });
+    expect(result).toEqual({ Ok: expect.objectContaining({ username: postProfile_identity_one_public.username }) });
   });
 
   it("Identity one profile should exist", async () => {
     const result = await identityOneProfileCanisters?.child.get_profile_by_user_principal(
       identities.one().getPrincipal()
     );
-    expect(result).toEqual({ Ok: expect.objectContaining({ username: postProfileMock.username }) });
+    expect(result).toEqual({ Ok: expect.objectContaining({ username: postProfile_identity_one_public.username }) });
   });
 
   it("Identity one should have an entry on the member canister with the correct data", async () => {
@@ -102,7 +102,7 @@ describe("Create profile test", () => {
       return;
     }
     const result = await identityTwoProfileCanisters?.child.add_profile(
-      postProfileMock,
+      postProfile_identity_one_public,
       Principal.fromText(memberCanisters.childCanisterId)
     );
     expect(result).toEqual({ Err: expect.anything() });

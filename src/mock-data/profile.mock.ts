@@ -1,12 +1,12 @@
 import { PostProfile } from "../declarations/profiles.declarations";
 
-export const postProfileMock: PostProfile = {
-  username: "one",
-  display_name: "one",
-  extra: "one",
+export const postProfile_identity_one_public: PostProfile = {
+  username: "identity_one_profile",
+  display_name: "identity_one_profile",
+  extra: "identity_one_profile",
   privacy: {
     Public: null,
   },
-  first_name: "one",
-  last_name: "one",
+  first_name: "identity_one_profile",
+  last_name: "identity_one_profile",
 };
