@@ -7,9 +7,6 @@ import { _SERVICE as _MEMBER_SERVICE } from "../declarations/members.declaration
 import { CanisterRelation, getParentAndChildCanister } from "../helper-functions/actor.helpers";
 
 export function createGroupTest(identity: Ed25519KeyIdentity, postGroup: PostGroup) {
-  beforeEach(() => {
-    jest.resetModules();
-  });
   let profileCanister: CanisterRelation<_PROFILE_SERVICE> | undefined;
   let groupCanisters: CanisterRelation<_GROUP_SERVICE> | undefined;
   let memberCanisters: CanisterRelation<_MEMBER_SERVICE> | undefined;
