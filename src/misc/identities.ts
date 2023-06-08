@@ -23,4 +23,5 @@ export default {
   one: identityOne,
   two: identityTwo,
   three: identityThree,
+  array: [identityOne, identityTwo, identityThree],
 };
